@@ -1,16 +1,18 @@
 import rrdtool
 import json
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 dataFile = "environment.rrd"
 FACTOR = 1.3
 
-def get_data():
+def get_data(timeFrame):
+    startTime = "now-%s" % timeFrame
+    print startTime
     jsonData = rrdtool.xport("--start",
-        "now-4h",
+        startTime.encode('ascii', 'ignore'),
         "--end",
         "now",
         "--step",
@@ -31,10 +33,8 @@ def get_series(data):
     rows = map(list, zip(*data['data']))
     return zip(data['meta']['legend'], rows)
 
-@app.route('/')
-@app.route('/index')
-def index():
-    jsonData = get_data()
+def plot_graph(timeFrame):
+    jsonData = get_data(timeFrame)
     data = get_series(jsonData)
     startTime = jsonData['meta']['start']
     endTime = jsonData['meta']['end']
@@ -75,13 +75,23 @@ def index():
             # {'title': {'text': 'Pressure'}, 'opposite': 'true'},
             # {'title': {'text': 'Light'}, 'opposite': 'true'}]
 
-    return render_template('index.html',
+    return render_template('graph.html',
         chartID='temperatures',
         chart=chart,
         series=json.dumps(series),
         title=title,
         xAxis=xAxis,
         yAxis=yAxis)
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/graph/<timeframe>/')
+def graph(timeframe):
+    return plot_graph(timeframe)
+
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
