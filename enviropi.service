@@ -1,0 +1,7 @@
+[Unit]
+Description=Enviropi
+
+[Service]
+Type=simple
+ExecStart=python /home/shearna/repos/enviropi/enviro.py
+PIDFile=/var/run/enviropi.pid
