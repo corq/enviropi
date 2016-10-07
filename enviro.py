@@ -14,7 +14,7 @@ def get_environment():
     data['cpuTemp'] = get_cpu_temperature()
     data['calibTemp'] = data['boardTemp'] - ((data['cpuTemp'] - data['boardTemp'])/FACTOR)
 
-    print data
+    # print data
     return data
 
 def get_cpu_temperature():
@@ -23,6 +23,7 @@ def get_cpu_temperature():
     return float(output[output.index('=') + 1:output.rindex("'")])
 
 if __name__ == '__main__':
+    print "Starting..."
     while True:
         try:
             data = get_environment()
