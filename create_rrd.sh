@@ -5,6 +5,7 @@
 
 rrdtool create environment.rrd \
     --start now \
+    --step 300 \
     DS:temp:GAUGE:576:-20:50    \
     DS:atm:GAUGE:576:0:U    \
     DS:light:GAUGE:576:0:U    \
