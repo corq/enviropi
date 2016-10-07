@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-dataFile = "environment.rrd"
+dataFile = "/home/shearna/repos/enviropi/environment.rrd"
 FACTOR = 1.3
 
 def get_data(timeFrame):

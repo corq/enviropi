@@ -6,7 +6,7 @@ import time, sys
 from subprocess import PIPE, Popen
 from envirophat import light, weather
 
-dataFile = "environment.rrd"
+dataFile = "/home/shearna/repos/enviropi/environment.rrd"
 FACTOR = 1.3
 
 def get_environment():
