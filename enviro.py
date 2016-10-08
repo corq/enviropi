@@ -4,7 +4,7 @@ import rrdtool
 import time, sys
 
 from subprocess import PIPE, Popen
-from envirophat import light, weather
+from envirophat import light, weather, leds
 
 dataFile = "/home/shearna/repos/enviropi/environment.rrd"
 FACTOR = 1.3
