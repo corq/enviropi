@@ -1,5 +1,7 @@
 import rrdtool
 import json
+import argparse
+import sys
 
 from flask import Flask, render_template, request
 
@@ -92,6 +94,13 @@ def index():
 def graph(timeframe):
     return plot_graph(timeframe)
 
+## Arguments
+parser = argparse.ArgumentParser(description='Run the EnviroPi webserver')
+parser.add_argument('--debug', help='enable debug mode', action='store_true')
+args = parser.parse_args()
 
 if __name__ == '__main__':
-    app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
+    if args.debug:
+        app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
+    else:
+        app.run(host='0.0.0.0', port=80)
